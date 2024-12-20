@@ -23,9 +23,9 @@ if __name__ == '__main__':
     device = torch.device('cuda:3' if torch.cuda.is_available() else 'cpu')
     torch.cuda.empty_cache()
     # # Hyperparameters
-    hidden_size, num_layersGAT, num_layersGRU, expansion,  n_heads = 64, 1, 6, 2, 6
+    hidden_size, num_layersGAT, num_layersGRU, expansion,  n_heads = 64, 1, 6, 2, 8
 
-    learning_rate, schd_stepzise, gamma, epochs, batch_size, patience_limit, clip= 5e-4, 15, 0.25, 350, 128, 50, 1
+    learning_rate, schd_stepzise, gamma, epochs, batch_size, patience_limit, clip= 6e-4, 20, 0.15, 350, 128, 25, 1
 
     Headers = ['Frame', 'ID', 'BBx', 'BBy','W', 'L' , 'Cls','Tr1', 'Tr2', 'Tr3', 'Tr4', 'Zone', 'Xreal', 'Yreal']
     Columns_to_keep = [11,2,3,7,8,9,10] #['BBx', 'BBy','Tr1', 'Tr2', 'Tr3', 'Tr4']
@@ -42,6 +42,7 @@ if __name__ == '__main__':
 
     sos = torch.cat((torch.tensor([10,1021,1021,7,7,7,7]), torch.zeros(17))).repeat(1,1,32, 1).to(device)
     eos = torch.cat((torch.tensor([11,1022,1022,8,8,8,8]), torch.zeros(17))).repeat(1,1,32, 1).to(device)
+    # sos_target = torch.cat((torch.tensor([1,1]), torch.zeros(17))).repeat(1,1,32, 1).to(device)
 
     generate_data = False #  Add class by loading the CSV file
     # generate_data = True #  Add class by loading the CSV file

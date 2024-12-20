@@ -61,8 +61,9 @@ class Scenes(Dataset):
             start_indx = j + self.sl
             scene = fullscene[j : j+ self.sl]
             ct = (scene[:,:,self.xyidx[0]] == 0).sum(dim=0) # count the number of zeros in the x direction
-            ct = (ct < 15).view(1, self.Nnodes, 1) # if the number of zeros in the x direction is more than 10, we ignore the scene
+            ct = (ct < 10).view(1, self.Nnodes, 1) # if the number of zeros in the x direction is more than 10, we ignore the scene
             target = fullscene[start_indx : final_indx] * ct
+            scene = scene* ct
             self.addnew(scene, target, 
                         Zones[j : final_indx], IDs[j:final_indx],
                         Fr[j:final_indx], NObjs)
